@@ -13,5 +13,5 @@ provider:
   regions: us-east-2
 
 functions:
-  hello:
-    handler: handler.hello
+  parser:
+    handler: feed-parser.main
