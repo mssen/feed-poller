@@ -2,8 +2,11 @@
   "extends": ["eslint:recommended", "prettier"],
   "env": {
     "node": true,
-    "es6": true,
     "jest": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2017
   },
   "rules": {
     "comma-dangle": [2, "never"],
