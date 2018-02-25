@@ -13,5 +13,7 @@ provider:
   regions: us-east-2
 
 functions:
+  grabber:
+    handler: feed-grabber.main
   parser:
     handler: feed-parser.main
