@@ -1,6 +1,10 @@
 import axios from 'axios';
 import FeedParser from 'feedparser';
+import cheerio from 'cheerio';
 import isAfter from 'date-fns/is_after';
+import format from 'date-fns/format';
+
+import { putWork } from './lib/dynamo';
 
 function poller(url) {
   return axios({
@@ -10,10 +14,47 @@ function poller(url) {
   });
 }
 
-function parseItem(item, lastUpdatedAt) {
-  const updatedTime = item['atom:updated']['#'];
+async function parseItem(item, lastUpdatedAt) {
+  const updatedTime = parseInt(format(item['atom:updated']['#'], 'x'));
   if (isAfter(updatedTime, lastUpdatedAt)) {
-    // Then parse and put to Dynamo
+    const work = {};
+
+    work.Url = item.link;
+    work.Title = item.title;
+
+    const author = cheerio.load(item.author)('a');
+    work.Author = {
+      Name: author.text(),
+      Url: author.attr('href')
+    };
+
+    const summary = cheerio.load(item.summary);
+
+    // Might need to do this a different way, since this removes the href info for a series
+    const pTags = summary('p')
+      .slice(1) // drops author paragraph
+      .map((index, element) => cheerio(element).text())
+      .get();
+
+    // TODO: Parse more
+    if (pTags[pTags.length - 1].startsWith('Words')) {
+      work.WordsLine = pTags.pop();
+    } else {
+      work.SeriesLine = pTags.pop();
+      work.WordsLine = pTags.pop();
+    }
+
+    work.Summary = pTags;
+
+    // TODO: Decide if I care about links
+    work.Metadata = summary('li')
+      .map((index, element) => cheerio(element).text())
+      .get();
+
+    work.Published = parseInt(format(item['atom:published']['#'], 'x'));
+    work.Updated = updatedTime;
+
+    await putWork(work);
   }
 }
 
@@ -35,7 +76,7 @@ function parseFeed(responseStream, lastUpdatedAt) {
 export async function main(event, context, callback) {
   // Extract url and update date from event
   const feedUrl = 'https://archiveofourown.org/tags/12064265/feed.atom';
-  const lastUpdatedAt = Date.now();
+  const lastUpdatedAt = 0;
   try {
     const response = await poller(feedUrl);
     parseFeed(response.data, lastUpdatedAt);
