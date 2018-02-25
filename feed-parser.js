@@ -1,42 +1,46 @@
 import axios from 'axios';
 import FeedParser from 'feedparser';
-
-const feedparser = new FeedParser();
+import isAfter from 'date-fns/is_after';
 
 function poller(url) {
   return axios({
-    method: 'get',
     url,
+    method: 'get',
     responseType: 'stream'
   });
 }
 
-function parseResposne(response) {
-  response.data.pipe(feedparser);
-  return new Promise((resolve, reject) => {
-    feedparser.on('error', (error) => reject(error));
+function parseItem(item, lastUpdatedAt) {
+  const updatedTime = item['atom:updated']['#'];
+  if (isAfter(updatedTime, lastUpdatedAt)) {
+    // Then parse and put to Dynamo
+  }
+}
 
-    feedparser.on('readable', () => {
-      const items = [];
-      let item;
-
+function parseFeed(responseStream, lastUpdatedAt) {
+  const feedparser = new FeedParser();
+  let item;
+  responseStream
+    .pipe(feedparser)
+    .on('readable', () => {
       while ((item = feedparser.read())) {
-        items.push(item);
+        parseItem(item, lastUpdatedAt);
       }
-
-      return resolve(items);
+    })
+    .on('error', (error) => {
+      throw error;
     });
-  });
 }
 
 export async function main(event, context, callback) {
+  // Extract url and update date from event
+  const feedUrl = 'https://archiveofourown.org/tags/12064265/feed.atom';
+  const lastUpdatedAt = Date.now();
   try {
-    const response = await poller(
-      'https://archiveofourown.org/tags/12064265/feed.atom'
-    );
-    const items = await parseResposne(response);
-    callback(null, `Length: ${items.length}`);
+    const response = await poller(feedUrl);
+    parseFeed(response.data, lastUpdatedAt);
+    // trying this without a callback for success
   } catch (error) {
-    callback(null, error);
+    callback(error);
   }
 }
