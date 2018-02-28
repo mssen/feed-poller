@@ -74,14 +74,15 @@ function parseFeed(responseStream, lastUpdatedAt) {
 }
 
 export async function main(event, context, callback) {
-  // Extract url and update date from event
-  const feedUrl = 'https://archiveofourown.org/tags/12064265/feed.atom';
-  const lastUpdatedAt = 0;
-  try {
-    const response = await poller(feedUrl);
-    parseFeed(response.data, lastUpdatedAt);
-    // trying this without a callback for success
-  } catch (error) {
-    callback(error);
-  }
+  event.Records.forEach((rec) => console.log(rec.Sns));
+  // // Extract url and update date from event
+  // const feedUrl = 'https://archiveofourown.org/tags/12064265/feed.atom';
+  // const lastUpdatedAt = 0;
+  // try {
+  //   const response = await poller(feedUrl);
+  //   parseFeed(response.data, lastUpdatedAt);
+  //   // trying this without a callback for success
+  // } catch (error) {
+  //   callback(error);
+  // }
 }

@@ -1,30 +1,25 @@
 {
   "Records": [
     {
-      "EventVersion": "1.0",
-      "EventSubscriptionArn": "eventsubscriptionarn",
       "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn":
+        "arn:aws:sns:us-east-2:202087792881:feed-update:f5c8254f-ef53-4d6a-975d-f56de799053c",
       "Sns": {
-        "SignatureVersion": "1",
-        "Timestamp": "1970-01-01T00:00:00.000Z",
-        "Signature": "EXAMPLE",
-        "SigningCertUrl": "EXAMPLE",
-        "MessageId": "95df01b4-ee98-5cb9-9903-4c221d41eb5e",
-        "Message": "http://awebsite.com/feed",
-        "MessageAttributes": {
-          "Test": {
-            "Type": "String",
-            "Value": "TestString"
-          },
-          "TestBinary": {
-            "Type": "Binary",
-            "Value": "TestBinary"
-          }
-        },
         "Type": "Notification",
-        "UnsubscribeUrl": "EXAMPLE",
-        "TopicArn": "topicarn",
-        "Subject": "TestInvoke"
+        "MessageId": "d0e6c591-fe11-5465-9f8c-969e227c25ea",
+        "TopicArn": "arn:aws:sns:us-east-2:202087792881:feed-update",
+        "Subject": "feed1",
+        "Message": "1519770157405",
+        "Timestamp": "2018-02-27T22:22:37.682Z",
+        "SignatureVersion": "1",
+        "Signature":
+          "jEPZQnQZoPaMHbKAjoLCsnM6FZcHca7g9cRx2WVtxKgfpSWJ4PjsU5uamUBNxeKZ27JXaytXAjHNHyzmTbjyS4OcKzziskjf+/ZIvqvSRqL/1dt2jg5YUFP2K5/qkZ2if20N6DGBB4emBobZhVH4ViHy6ptfBxU2TUSJ7H/SXKO/T8J+6SbBhBVR2kXJUt5YiV28NBs0GMyhX3NiR9bB9y9S/wsltbYAw+vSP/tW2pff9jd2NMHQT1nDSaANU/S0slv0L9acYh1Ki5FEAc22pedkDEDUmvzXeopsLl+5/kCJ6hxXdxX7S3AlpDRh9Hyhe7be0WAvRxQKWyyp/ZcekQ==",
+        "SigningCertUrl":
+          "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
+        "UnsubscribeUrl":
+          "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-2:202087792881:feed-update:f5c8254f-ef53-4d6a-975d-f56de799053c",
+        "MessageAttributes": {}
       }
     }
   ]
