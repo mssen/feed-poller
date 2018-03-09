@@ -2,8 +2,8 @@ import axios from 'axios';
 import FeedParser from 'feedparser';
 import cheerio from 'cheerio';
 import isAfter from 'date-fns/is_after';
-import format from 'date-fns/format';
 
+import { formatDate } from './lib/util';
 import { putWork } from './lib/dynamo';
 
 function poller(url) {
@@ -15,7 +15,7 @@ function poller(url) {
 }
 
 async function parseItem(item, lastUpdatedAt) {
-  const updatedTime = parseInt(format(item['atom:updated']['#'], 'x'));
+  const updatedTime = formatDate(item['atom:updated']['#']);
   if (isAfter(updatedTime, lastUpdatedAt)) {
     const work = {};
 
@@ -51,7 +51,7 @@ async function parseItem(item, lastUpdatedAt) {
       .map((index, element) => cheerio(element).text())
       .get();
 
-    work.Published = parseInt(format(item['atom:published']['#'], 'x'));
+    work.Published = formatDate(item['atom:published']['#']);
     work.Updated = updatedTime;
 
     await putWork(work);
