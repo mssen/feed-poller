@@ -1,8 +1,8 @@
 import subHours from 'date-fns/sub_hours';
 
-import { formatDate } from './lib/util';
-import { listFeeds } from './lib/dynamo';
-import { sendFeed } from './lib/sns';
+import { formatDate } from '../lib/util';
+import { listFeeds } from '../lib/dynamo';
+import { sendFeed } from '../lib/sns';
 
 export async function main(event, context, callback) {
   try {

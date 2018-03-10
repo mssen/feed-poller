@@ -3,8 +3,8 @@ import FeedParser from 'feedparser';
 import cheerio from 'cheerio';
 import isAfter from 'date-fns/is_after';
 
-import { formatDate } from './lib/util';
-import { putWork } from './lib/dynamo';
+import { formatDate } from '../lib/util';
+import { putWork } from '../lib/dynamo';
 
 function poller(url) {
   return axios({
