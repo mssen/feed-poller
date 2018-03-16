@@ -5,6 +5,7 @@ module.exports = {
   entry: serverlessWebpack.lib.entries,
   target: 'node',
   externals: [nodeExternals()],
+  mode: serverlessWebpack.lib.webpack.isLocal ? "development" : "production",
   module: {
     rules: [
       {
