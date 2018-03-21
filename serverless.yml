@@ -38,7 +38,7 @@ provider:
 
 functions:
   grabber:
-    handler: functions/feed-grabber.main
+    handler: src/handler/feed-grabber.main
     # events:
     #   - schedule: rate(12 hours)
     environment:
@@ -49,7 +49,7 @@ functions:
             - Ref: AWS::AccountId
             - ':${self:custom.snsTopic}'
   parser:
-    handler: functions/feed-parser.main
+    handler: src/handler/feed-parser.main
     events:
       - sns: ${self:custom.snsTopic}
   # updater:
