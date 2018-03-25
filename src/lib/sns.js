@@ -1,11 +1,10 @@
 import SNS from 'aws-sdk/clients/sns';
 
-export function sendFeed(feed, lastUpdatedAt) {
+export function sendFeed(feed, lastUpdated) {
   const snsClient = new SNS();
   const params = {
-    TopicArn: 'arn:aws:sns:us-east-2:202087792881:feed-update',
-    Subject: feed,
-    Message: `${lastUpdatedAt}`
+    TopicArn: process.env.SNS_TOPIC_ARN,
+    Message: JSON.stringify({ feed, lastUpdated })
   };
   return snsClient.publish(params).promise();
 }
