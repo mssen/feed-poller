@@ -13,6 +13,19 @@ export function listFeeds(threshold) {
   return documentClient.scan(params).promise();
 }
 
+export function updateLastUpdatedFeed(url, lastUpdated) {
+  const documentClient = new DynamoDB.DocumentClient();
+  const params = {
+    TableName: 'Nope',
+    Key: { HashKey: url },
+    UpdateExpression: 'set LastUpdated = :currentLastUpdated',
+    ExpressionAttributeValues: {
+      ':currentLastUpdated': lastUpdated
+    }
+  };
+  return documentClient.update(params).promise();
+}
+
 export function putWork(work) {
   const documentClient = new DynamoDB.DocumentClient();
   const params = {
