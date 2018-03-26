@@ -1,11 +1,6 @@
 service: feed-poller
 
-plugins:
-  - serverless-webpack
-
 custom:
-  webpack:
-    includeModules: true
   snsTopic: 'feed-update-${self:provider.stage}'
 
 provider:
@@ -53,15 +48,6 @@ functions:
     handler: src/handler/feed-parser.main
     events:
       - sns: ${self:custom.snsTopic}
-  # updater:
-  #   handler: feed-updater.main
-  #   events:
-  #     - stream:
-  #         type: dynamodb
-  #         arn:
-  #           Fn::GetAtt:
-  #             - worksTable
-  #             - StreamArn
 
 resources:
   Resources:
@@ -82,33 +68,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 1
-#     userFeedsTable:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: UsersFeeds
-#         AttributeDefinitions:
-#           - AttributeName: User
-#             AttributeType: S
-#           - AttributeName: Feed
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: User
-#             KeyType: HASH
-#           - AttributeName: Feed
-#             KeyType: RANGE
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 5
-#           WriteCapacityUnits: 5
-#     worksTable:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: Works
-#         AttributeDefinitions:
-#           - AttributeName: Url
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: Url
-#             KeyType: HASH
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 5
-#           WriteCapacityUnits: 5

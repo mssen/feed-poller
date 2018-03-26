@@ -1,9 +1,9 @@
-import AWS from 'aws-sdk/global';
-import DynamoDB from 'aws-sdk/clients/dynamodb';
+const AWS = require('aws-sdk/global');
+const DynamoDB = require('aws-sdk/clients/dynamodb');
 
 AWS.config.update({ region: 'us-east-2' });
 
-export function listFeeds(threshold) {
+module.exports.listFeeds = (threshold) => {
   const documentClient = new DynamoDB.DocumentClient();
   const params = {
     TableName: 'Feeds',
@@ -11,9 +11,9 @@ export function listFeeds(threshold) {
     ExpressionAttributeValues: { ':threshold': threshold }
   };
   return documentClient.scan(params).promise();
-}
+};
 
-export function updateLastUpdatedFeed(url, lastUpdated) {
+module.exports.updateLastUpdatedFeed = (url, lastUpdated) => {
   const documentClient = new DynamoDB.DocumentClient();
   const params = {
     TableName: 'Nope',
@@ -24,13 +24,13 @@ export function updateLastUpdatedFeed(url, lastUpdated) {
     }
   };
   return documentClient.update(params).promise();
-}
+};
 
-export function putWork(work) {
+module.exports.putWork = (work) => {
   const documentClient = new DynamoDB.DocumentClient();
   const params = {
     TableName: 'Works',
     Item: work
   };
   return documentClient.put(params).promise();
-}
+};

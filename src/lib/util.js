@@ -1,9 +1,4 @@
-import format from 'date-fns/format';
-import curryRight from 'lodash/curryRight';
+const format = require('date-fns/fp/format');
+const flow = require('lodash/fp/flow');
 
-// Have to explicitly set "options" to undefined
-const formatToEpoch = curryRight(format)(undefined)('x');
-
-export function formatDate(date) {
-  return parseInt(formatToEpoch(date));
-}
+module.exports.formatDate = flow(format('x'), parseInt);
