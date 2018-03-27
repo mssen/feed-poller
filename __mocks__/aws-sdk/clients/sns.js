@@ -1,6 +1,5 @@
 const __promise = jest.fn().mockReturnThis();
-const __publish = jest.fn();
-__publish.mockReturnValue({ promise: __promise });
+const __publish = jest.fn().mockReturnValue({ promise: __promise });
 const SNS = jest.fn().mockImplementation(() => ({
   publish: __publish
 }));
