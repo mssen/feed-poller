@@ -7,7 +7,8 @@
     "url": "https://github.com/mssen/feed-poller.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch",
+    "test:once": "jest"
   },
   "author": "Missy Danielsen <missy.danielsen@gmail.com>",
   "license": "MIT",
