@@ -2,7 +2,10 @@
   "name": "feed-poller",
   "version": "1.0.0",
   "description": "AWS lambda for polling RSS feeds.",
-  "main": "handler.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mssen/feed-poller.git"
+  },
   "scripts": {
     "test": "jest"
   },
