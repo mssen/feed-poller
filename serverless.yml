@@ -61,13 +61,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: Url
             AttributeType: S
-          - AttributeName: LastUpdated
-            AttributeType: N
         KeySchema:
           - AttributeName: Url
             KeyType: HASH
-          - AttributeName: LastUpdated
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 1

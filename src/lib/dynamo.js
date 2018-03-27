@@ -16,8 +16,8 @@ module.exports.listFeeds = (threshold) => {
 module.exports.updateLastUpdatedFeed = (url, lastUpdated) => {
   const documentClient = new DynamoDB.DocumentClient();
   const params = {
-    TableName: 'Nope',
-    Key: { HashKey: url },
+    TableName: 'Feeds',
+    Key: { Url: url },
     UpdateExpression: 'set LastUpdated = :currentLastUpdated',
     ExpressionAttributeValues: {
       ':currentLastUpdated': lastUpdated
