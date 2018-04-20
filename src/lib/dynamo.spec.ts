@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk/global');
 const {
-  __scan,
+  mockScan,
   __update,
   __put,
   __promise
@@ -16,7 +16,7 @@ describe('DynamoDB library', () => {
     const threshold = 123;
     const result = listFeeds(threshold);
 
-    expect(__scan).toHaveBeenCalledWith({
+    expect(mockScan).toHaveBeenCalledWith({
       TableName: 'Feeds',
       FilterExpression: 'LastUpdated < :threshold',
       ExpressionAttributeValues: { ':threshold': threshold }

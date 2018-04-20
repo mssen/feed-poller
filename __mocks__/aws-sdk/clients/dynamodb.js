@@ -1,20 +1,20 @@
-const __promise = jest.fn().mockReturnThis();
-const __scan = jest.fn();
-__scan.mockReturnValue({ promise: __promise });
-const __update = jest.fn();
-__update.mockReturnValue({ promise: __promise });
-const __put = jest.fn();
-__put.mockReturnValue({ promise: __promise });
+const mockPromise = jest.fn().mockReturnThis();
+const mockScan = jest.fn();
+mockScan.mockReturnValue({ promise: mockPromise });
+const mockUpdate = jest.fn();
+mockUpdate.mockReturnValue({ promise: mockPromise });
+const mockPut = jest.fn();
+mockPut.mockReturnValue({ promise: mockPromise });
 const DynamoDB = {
   DocumentClient: jest.fn().mockImplementation(() => ({
-    scan: __scan,
-    update: __update,
-    put: __put
+    scan: mockScan,
+    update: mockUpdate,
+    put: mockPut
   }))
 };
 
 module.exports = DynamoDB;
-module.exports.__scan = __scan;
-module.exports.__update = __update;
-module.exports.__put = __put;
-module.exports.__promise = __promise;
+module.exports.mockScan = mockScan;
+module.exports.mockUpdate = mockUpdate;
+module.exports.mockPut = mockPut;
+module.exports.mockPromise = mockPromise;

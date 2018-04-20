@@ -1,9 +1,9 @@
-const __promise = jest.fn().mockReturnThis();
-const __publish = jest.fn().mockReturnValue({ promise: __promise });
+const mockPromise = jest.fn().mockReturnThis();
+const mockPublish = jest.fn().mockReturnValue({ promise: mockPromise });
 const SNS = jest.fn().mockImplementation(() => ({
-  publish: __publish
+  publish: mockPublish
 }));
 
 module.exports = SNS;
-module.exports.__publish = __publish;
-module.exports.__promise = __promise;
+module.exports.mockPublish = mockPublish;
+module.exports.mockPromise = mockPromise;

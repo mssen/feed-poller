@@ -1,4 +1,4 @@
-const { __publish, __promise } = require('aws-sdk/clients/sns');
+const { mockPublish, mockPromise } = require('aws-sdk/clients/sns');
 
 const { sendFeed } = require('./sns');
 
@@ -9,11 +9,11 @@ describe('SNS library', () => {
     process.env.SNS_TOPIC_ARN = 'topicarn';
     const result = sendFeed(feed, lastUpdated);
 
-    expect(__publish).toHaveBeenCalledWith({
+    expect(mockPublish).toHaveBeenCalledWith({
       TopicArn: process.env.SNS_TOPIC_ARN,
       Message: `{"feed":"${feed}","lastUpdated":${lastUpdated}}`
     });
-    expect(__promise).toHaveBeenCalled();
-    expect(result.promise).toBe(__promise);
+    expect(mockPromise).toHaveBeenCalled();
+    expect(result.promise).toBe(mockPromise);
   });
 });
