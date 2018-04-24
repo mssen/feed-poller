@@ -6,7 +6,7 @@ const {
   __promise
 } = require('aws-sdk/clients/dynamodb');
 
-const { listFeeds, updateLastUpdatedFeed, putWork } = require('./dynamo');
+const { listFeeds, updateLastUpdatedFeed, putWork } = require('../lib/dynamo');
 
 describe('DynamoDB library', () => {
   it('should set the region', () => {

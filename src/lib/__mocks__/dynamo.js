@@ -1,19 +1,9 @@
-const successUrl = 'avalidurl';
-const failureUrl = 'abadurl';
+const { badDynamoUrl, badSnsUrl, error } = require('./resources');
 
-module.exports.successUrl = successUrl;
-module.exports.failureUrl = failureUrl;
-
-module.exports.listFeeds = jest
-  .fn()
-  .mockResolvedValue({ Items: [{ Url: successUrl, LastUpdated: 123 }] });
-// .mockResolvedValueOnce({ Items: [{ Url: failureUrl, LastUpdated: 123 }] });
+module.exports.listFeeds = jest.fn();
 
 module.exports.updateLastUpdatedFeed = jest
   .fn()
   .mockImplementation(
-    (url) =>
-      url === failureUrl
-        ? Promise.reject({ error: 'This failed' })
-        : Promise.resolve()
+    (url) => (url === badDynamoUrl ? Promise.reject(error) : Promise.resolve())
   );

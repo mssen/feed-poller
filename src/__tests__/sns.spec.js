@@ -1,6 +1,6 @@
 const { __publish, __promise } = require('aws-sdk/clients/sns');
 
-const { sendFeed } = require('./sns');
+const { sendFeed } = require('../lib/sns');
 
 describe('SNS library', () => {
   it('should send a feed', () => {

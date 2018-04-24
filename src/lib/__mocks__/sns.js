@@ -1,13 +1,7 @@
-const successUrl = 'avalidurl';
-const failureUrl = 'abadurl';
+const { badSnsUrl, error } = require('./resources');
 
-module.exports.successUrl = successUrl;
-module.exports.failureUrl = failureUrl;
-
-module.exports.sendFeed = jest.fn().mockResolvedValue('3');
-// .mockImplementation(
-//   (url) =>
-//     url === failureUrl
-//       ? Promise.reject({ error: 'This failed' })
-//       : Promise.resolve()
-// );
+module.exports.sendFeed = jest
+  .fn()
+  .mockImplementation(
+    (url) => (url === badSnsUrl ? Promise.reject(error) : Promise.resolve())
+  );
